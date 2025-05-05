@@ -1,6 +1,12 @@
-<h2>Product List</h2>
-<ul>
-  <li *ngFor="let product of products">
-    {{ product.name }} - {{ product.price }}
-  </li>
-</ul>
+<h2>Post List</h2>
+<div class="post-list">
+  <div *ngFor="let post of products" class="post-item">
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.body }}</p>
+    <div class="actions">
+      <button (click)="editPost(post.id)">Edit</button>
+      <button (click)="deletePost(post.id)">Delete</button>
+    </div>
+  </div>
+</div>
+<button (click)="addNewPost()">Add New Post</button>

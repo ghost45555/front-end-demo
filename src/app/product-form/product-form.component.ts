@@ -12,7 +12,7 @@ import { ProductService } from '../product.service';
   styleUrl: './product-form.component.css'
 })
 export class ProductFormComponent implements OnInit {
-  product: any = { name: '', price: 0 };
+  product: any = { title: '', body: '' };
   isEditMode = false;
 
   constructor(
@@ -30,35 +30,39 @@ export class ProductFormComponent implements OnInit {
   }
 
   loadProduct(id: number): void {
-    this.productService.getProduct(id).subscribe(
-      (data) => {
+    this.productService.getProduct(id).subscribe({
+      next: (data) => {
         this.product = data;
       },
-      (error) => {
-        console.error('Error fetching product', error);
+      error: (error) => {
+        console.error('Error fetching post', error);
       }
-    );
+    });
   }
 
   onSubmit(): void {
     if (this.isEditMode) {
-      this.productService.updateProduct(this.product).subscribe(
-        () => {
+      this.productService.updateProduct(this.product).subscribe({
+        next: () => {
           this.router.navigate(['/']);
         },
-        (error) => {
-          console.error('Error updating product', error);
+        error: (error) => {
+          console.error('Error updating post', error);
         }
-      );
+      });
     } else {
-      this.productService.addProduct(this.product).subscribe(
-        () => {
+      this.productService.addProduct(this.product).subscribe({
+        next: () => {
           this.router.navigate(['/']);
         },
-        (error) => {
-          console.error('Error adding product', error);
+        error: (error) => {
+          console.error('Error adding post', error);
         }
-      );
+      });
     }
+  }
+
+  goBack(): void {
+    this.router.navigate(['/']);
   }
 }
